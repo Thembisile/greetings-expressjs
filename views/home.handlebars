@@ -1,0 +1,81 @@
+<div class="container" style="background-color:beige">
+    <div class="row">
+        <div class="twelve columns">
+            <h5 class="greetText"> <strong>G R E E T I N G </strong></h5>
+        </div>
+    </div>
+
+    <div class="row">
+        <form action="/greetings">
+            <div class="two columns">
+                <p id="para"> <strong>Name :</strong></p>
+            </div>
+
+            <div class="four columns">
+                <textarea name="greetTextArea" rows="8" cols="30" class="greetingText" value=''></textarea>
+            </div>
+
+            <div class="three columns">
+                <div id="displayCount"> <strong>Counter :</strong>
+                    <span class=""> <span class="greetCount"></span> </span>
+                </div>
+            </div>
+        </form>
+    </div>
+    <br>
+    <br>
+    <div class="row">
+        <div class="twelve columns" style="text-align:center">
+            <h4 id="langHead">Select Language</h4>
+        </div>
+    </div>
+    <br>
+    <form action="/buttons" method="POST">
+        <div class="Languages">
+            <div class="row">
+                <div class="four columns">
+                    <label class="">
+                        <input type="radio" name="languageSelector" class="languageSelectRadio" value="English"></input>
+                        <span class="label-body">English</span>
+                    </label>
+                </div>
+
+                <div class="four columns">
+                    <label class="">
+                        <input type="radio" name="languageSelector" class="languageSelectRadio" value="Afrikaans"></input>
+                        <span class="label-body">Afrikaans</span>
+                    </label>
+                </div>
+
+                <div class="four columns">
+                    <label class="">
+                        <input type="radio" name="languageSelector" class="languageSelectRadio" value="Xhosa"></input>
+                        <span class="label-body">IsiXhosa</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </form>
+    <br>
+    <form action="/buttons">
+        <div class="greetButtons">
+        <div class="row">
+            <div class="three columns">
+                <button class="button-primary greetBtn" type="submit" name="button">Greet Me</button>
+            </div>
+
+            <div class="three columns">
+                <button class="button-primary resetBtn" type="submit" name="button" value="">Reset</button>
+            </div>
+        </div>
+    </div>
+    </form>
+    <br>
+    <div class="displayField">
+        <div class="row">
+            <div class="twelve columns">
+                <span class=""> <code></code><span class="displayName"></span> <code></code> </span>
+            </div>
+        </div>
+    </div>
+</div>
