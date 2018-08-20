@@ -1,9 +1,13 @@
-function GreetPerson(storedUser){
+module.exports = function (storedUser){
 
   var person = '';
-  var greetCount = 0;
+  var greetingDone = 0;
   var nameAndLang = '';
   var mapNames = {};
+
+  function insertGreeting(){
+    return greetingDone;
+  }
 
   function greetingFunction(name, language){
 
@@ -20,6 +24,7 @@ function GreetPerson(storedUser){
      mapNames[person] = 0;
       }
     }
+    
     if (language === 'English') {
       nameAndLang = 'Hello, ' + name;
     }
@@ -43,7 +48,7 @@ function GreetPerson(storedUser){
     return mapNames
   }
 
-  function reset(){
+  function reset(name){
     return mapNames = {}
   }
 
@@ -52,6 +57,7 @@ function GreetPerson(storedUser){
     returnGreeting,
     greetCounter,
     nameMap,
-    reset
+    reset,
+    insertGreeting
   }
 }

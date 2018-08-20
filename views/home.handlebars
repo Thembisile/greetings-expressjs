@@ -6,21 +6,20 @@
     </div>
 
     <div class="row">
-        <form action="/greetings">
+        <form action="/greetings" method="POST">
             <div class="two columns">
                 <p id="para"> <strong>Name :</strong></p>
             </div>
 
             <div class="four columns">
-                <textarea name="greetTextArea" rows="8" cols="30" class="greetingText" value=''></textarea>
+                <input type="text" name="greetTextArea" placeholder="" class="">
             </div>
 
             <div class="three columns">
-                <div id="displayCount"> <strong>Counter :</strong>
+                <div id="displayCount"> <strong>Counter : {{counter}}</strong>
                     <span class=""> <span class="greetCount"></span> </span>
                 </div>
             </div>
-        </form>
     </div>
     <br>
     <br>
@@ -30,52 +29,53 @@
         </div>
     </div>
     <br>
-    <form action="/buttons" method="POST">
-        <div class="Languages">
-            <div class="row">
-                <div class="four columns">
-                    <label class="">
-                        <input type="radio" name="languageSelector" class="languageSelectRadio" value="English"></input>
-                        <span class="label-body">English</span>
-                    </label>
-                </div>
+    <div class="Languages">
+        <div class="row">
+            <div class="four columns">
+                <label class="">
+                    <input type="radio" name="languageSelector" class="languageRadio" value="English"></input>
+                    <span class="label-body">English</span>
+                </label>
+            </div>
 
-                <div class="four columns">
-                    <label class="">
-                        <input type="radio" name="languageSelector" class="languageSelectRadio" value="Afrikaans"></input>
-                        <span class="label-body">Afrikaans</span>
-                    </label>
-                </div>
+            <div class="four columns">
+                <label class="">
+                    <input type="radio" name="languageSelector" class="languageRadio" value="Afrikaans"></input>
+                    <span class="label-body">Afrikaans</span>
+                </label>
+            </div>
 
-                <div class="four columns">
-                    <label class="">
-                        <input type="radio" name="languageSelector" class="languageSelectRadio" value="Xhosa"></input>
-                        <span class="label-body">IsiXhosa</span>
-                    </label>
-                </div>
+            <div class="four columns">
+                <label class="">
+                    <input type="radio" name="languageSelector" class="languageRadio" value="IsiXhosa"></input>
+                    <span class="label-body">IsiXhosa</span>
+                </label>
             </div>
         </div>
-    </form>
+    </div>
     <br>
-    <form action="/buttons">
-        <div class="greetButtons">
+    <div class="greetButtons">
         <div class="row">
             <div class="three columns">
-                <button class="button-primary greetBtn" type="submit" name="button">Greet Me</button>
+                <button class="button-primary greetBtn" type="submit" name="button">Greet</button>
             </div>
 
-            <div class="three columns">
-                <button class="button-primary resetBtn" type="submit" name="button" value="">Reset</button>
-            </div>
         </div>
     </div>
     </form>
     <br>
-    <div class="displayField">
-        <div class="row">
-            <div class="twelve columns">
-                <span class=""> <code></code><span class="displayName"></span> <code></code> </span>
-            </div>
+    <div class="row">
+        <div class="twelve columns displayField">
+            <span class="">{{greeting}}</span>
         </div>
     </div>
+    <br>
+    <form action="/reset" method="POST">
+        <div class="row">
+            <div class="three columns">
+                <button class="button-primary resetBtn" type="submit" name="resetButton">Reset</button>
+            </div>
+        </div>
+    </form>
+</div>
 </div>
