@@ -4,13 +4,18 @@ module.exports = function (storedUser){
   var greetingDone = 0;
   var nameAndLang = '';
   var mapNames = {};
+  let error;
 
   function insertGreeting(){
     return greetingDone;
   }
 
-  function greetingFunction(name, language){
+  async function greetingFunction(name, language){
 
+    if (name === undefined || language === undefined) {
+      error = 'Please Enter Name & Choose Your Greeting Langauage';
+      return error;
+    }
     if(name != ''){
       person = name
     }
@@ -49,7 +54,11 @@ module.exports = function (storedUser){
   }
 
   function reset(name){
-    return mapNames = {}
+    mapNames = {};
+    person = '';
+    name = '';
+    greetingDone = 0;
+    return ;
   }
 
   return {
