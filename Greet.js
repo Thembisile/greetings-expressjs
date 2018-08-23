@@ -24,7 +24,7 @@ module.exports = function (storedUser){
      mapNames[person] = 0;
       }
     }
-    
+  
     if (language === 'English') {
       nameAndLang = 'Hello, ' + name;
     }
