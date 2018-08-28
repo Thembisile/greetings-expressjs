@@ -4,26 +4,30 @@ let bodyParser = require('body-parser');
 let Greet = require('./Greet');
 let flash = require('express-flash');
 let session = require('express-session');
-let Pool = pg.pool;
+let pg = require("pg");
+let Pool = pg.Pool;
 
 
-let useSSL = false;
-let local= process.env.LOCAL || false;
-if (process.env.DATABASE_URL && !local) {
-    useSSL = true;
-}
-let connectionString = process.env.DATABASE_URL || 'seandamon:Thando@2008@postgresql://localhost:5432/users';
+// let useSSL = false;
+// let local= process.env.LOCAL || false;
+// if (process.env.DATABASE_URL && !local) {
+//     useSSL = true;
+// }
+//let connectionString = process.env.DATABASE_URL || 'seandamon:Thando@2008@postgresql://localhost:5432/user_greeted';
 
 let pool = new Pool({
-    connectionString,
-    ssl : useSSL
+    user: 'seandamon',
+    host: 'localhost',
+    database: 'user_greeted',
+    password: 'Thando@2008',
+    port: 5432,
 });
 
 let app = express();
 let greet = Greet();
 
 app.use(session({
-    secret: 'keyboard users',
+    secret: 'keyboard us3rs',
     resave: false,
     saveUninitialized: true
 }));
@@ -55,11 +59,13 @@ app.get('/', function(req, res){
     });
 });
 
-app.post('/greetings', function(req, res){
+app.post('/greetings', async function(req, res){
     let text = req.body.greetTextArea;
     let language = req.body.languageSelector;
 
-    greet.greetingFunction(text, language);
+    if (text && language !== undefined)  {
+        await pool.query('insert into users (id_name, count) values ($1, $2)', [text, 1])
+    }
 
     res.redirect('/');
 })
