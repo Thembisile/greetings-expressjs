@@ -12,4 +12,4 @@
 -- );
 -- drop table users;
 
-INSERT INTO users (id_name, count) values ('Shaun has been greeted ', 1);
+-- INSERT INTO users (id_name) values ('Shaun has been greeted again ');

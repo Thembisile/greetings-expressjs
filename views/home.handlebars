@@ -16,7 +16,7 @@
             </div>
 
             <div class="three columns">
-                <div id="displayCount"> <strong>Counter : {{counter}}</strong>
+                <div id="displayCount"<strong>Counter : {{counter}}</strong>
                     <span class=""> <span class="greetCount"></span> </span>
                 </div>
             </div>
@@ -64,11 +64,8 @@
     </div>
     </form>
     <br>
-    <div class="row">
-        <div class="twelve columns displayField">
-            <span class="">{{greeting}}</span>
-        </div>
-    </div>
+    <span><a href="/greeted">Names Greeted</a></span>
+    <br>
     <br>
     <form action="/reset" method="POST">
         <div class="row">
@@ -77,5 +74,13 @@
             </div>
         </div>
     </form>
+    <div class="row">
+        <div class="twelve columns displayField">
+            <span class="">{{greeting}}</span>
+            {{#if messages.info}} {{messages.info}} {{/if}}
+        </div>
+    </div>
 </div>
+
+
 </div>

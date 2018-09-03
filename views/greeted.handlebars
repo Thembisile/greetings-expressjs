@@ -1,0 +1,22 @@
+<h1>Users Greeted</h1>
+
+<table>
+    <tr>
+        <th>
+            Id_Name & Description
+        </th>
+        <th>
+            Counter
+        </th>
+    </tr>
+    {{#each usersGreeted}}
+    <tr>
+        <td>
+            <a href="">{{id_name}}</a> has been greeted
+        </td>
+        <td>
+            {{count}}
+        </td>
+    </tr>
+    {{/each}}
+</table>

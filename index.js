@@ -7,14 +7,6 @@ let session = require('express-session');
 let pg = require("pg");
 let Pool = pg.Pool;
 
-
-// let useSSL = false;
-// let local= process.env.LOCAL || false;
-// if (process.env.DATABASE_URL && !local) {
-//     useSSL = true;
-// }
-//let connectionString = process.env.DATABASE_URL || 'seandamon:Thando@2008@postgresql://localhost:5432/user_greeted';
-
 let pool = new Pool({
     user: 'seandamon',
     host: 'localhost',
@@ -49,7 +41,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 
-app.get('/', function(req, res){
+app.get('/', async function(req, res){
     let greeting = greet.returnGreeting();
     let counter = greet.greetCounter();
 
@@ -63,16 +55,27 @@ app.post('/greetings', async function(req, res){
     let text = req.body.greetTextArea;
     let language = req.body.languageSelector;
 
-    if (text && language !== undefined)  {
-        await pool.query('insert into users (id_name, count) values ($1, $2)', [text, 1])
+    if (text === '' && language === undefined) {
+        req.flash('info', 'Please Enter Name & Select Language')
+    }
+
+    if (text !== undefined)  {
+        await pool.query('insert into users (id_name, count) values ($1, $2)', [text, 1]);
+        greet.greetingFunction(text, language);
     }
 
     res.redirect('/');
 })
 
+app.get('/greeted', async function(req, res){
+    let outcome = await pool.query('SELECT * FROM users;');
+    let usersGreeted = outcome.rows;
+    res.render('greeted', { usersGreeted });
+})
+
 app.post('/reset', function (req, res) {
     greet.reset();
-    // req.flash('warning', 'All data cleared out!');
+    // req.flash('info', 'All data cleared out!');
     res.redirect('/');
 })
 

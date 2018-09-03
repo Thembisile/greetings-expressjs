@@ -4,7 +4,7 @@ module.exports = function (storedUser) {
   let nameAndLang = '';
   let mapNames = {};
 
-  async function greetingFunction(name, language) {
+  function greetingFunction(name, language) {
 
     if (name != '') {
       person = name
@@ -43,9 +43,11 @@ module.exports = function (storedUser) {
     return mapNames
   }
 
-  function reset(name) {
-    mapNames = {};
-    return;
+  function reset() {
+     person = '';
+     nameAndLang = '';
+     mapNames = {};
+     
   }
 
   return {
