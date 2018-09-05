@@ -9,9 +9,6 @@ module.exports = function (storedUser) {
     if (name != '') {
       person = name
     }
-    if (storedUser) {
-      mapNames = storedUser
-    }
     if (person !== "") {
 
       if (mapNames[person] === undefined) {
@@ -29,6 +26,7 @@ module.exports = function (storedUser) {
     if (language === 'IsiXhosa') {
       nameAndLang = 'Molo, ' + name;
     }
+    return nameAndLang;
   }
 
   function returnGreeting() {
@@ -36,7 +34,7 @@ module.exports = function (storedUser) {
   }
 
   function greetCounter() {
-    return Object.keys(mapNames).length;
+    return Object.entries(mapNames).length;
   }
 
   function nameMap() {

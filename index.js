@@ -41,42 +41,71 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 
-app.get('/', async function(req, res){
+app.get('/', async function (req, res) {
     let greeting = greet.returnGreeting();
-    let counter = greet.greetCounter();
+    let count = await pool.query('select count(id_name ) from users;');
+    count = count.rows[0].count;
 
     res.render('home', {
         greeting,
-        counter
+        count
     });
 });
 
-app.post('/greetings', async function(req, res){
+app.post('/greetings', async function (req, res) {
     let text = req.body.greetTextArea;
     let language = req.body.languageSelector;
 
     if (text === '' && language === undefined) {
         req.flash('info', 'Please Enter Name & Select Language')
     }
+    else if (language === undefined) {
+        req.flash('info', 'Please Select Language');
+    }
+    else if (text === '') {
+        req.flash('warning', 'Please Enter Name :')
+    }
+    else {
 
-    if (text !== undefined)  {
-        await pool.query('insert into users (id_name, count) values ($1, $2)', [text, 1]);
-        greet.greetingFunction(text, language);
+        let user = await pool.query('SELECT * FROM users WHERE id_name=$1', [text])
+        if (user.rows.length != 0) {
+            let currentCount = await pool.query('SELECT count FROM users WHERE id_name = $1', [text]);
+            let initialCount = currentCount.rows[0].count + 1;
+            await pool.query('UPDATE users SET count=$1 WHERE id_name=$2', [initialCount, text]);
+        }
+        else {
+            greet.greetingFunction();
+            await pool.query('INSERT INTO users (id_name, count) values ($1, $2)', [text, 1])
+        }
     }
 
     res.redirect('/');
 })
 
-app.get('/greeted', async function(req, res){
+app.get('/greeted', async function (req, res) {
     let outcome = await pool.query('SELECT * FROM users;');
     let usersGreeted = outcome.rows;
     res.render('greeted', { usersGreeted });
 })
 
-app.post('/reset', function (req, res) {
+app.post('/reset', async function (req, res) {
+    await pool.query('DELETE FROM users;');
     greet.reset();
     // req.flash('info', 'All data cleared out!');
     res.redirect('/');
+})
+
+app.get('/perUser/:id_name', async function (req, res) {
+    try {
+        let id_name = req.params.id_name;
+        let outcome = await pool.query('SELECT * FROM users WHERE id_name=$1', [id_name]);
+
+        res.render('names', {
+            howManyTimes: outcome.rows
+        });
+    } catch (err) {
+        res.send(err.stack)
+    }
 })
 
 
