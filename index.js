@@ -74,7 +74,7 @@ app.post('/greetings', async function (req, res) {
             await pool.query('UPDATE users SET count=$1 WHERE id_name=$2', [initialCount, text]);
         }
         else {
-            greet.greetingFunction();
+            greet.returnGreeting();
             await pool.query('INSERT INTO users (id_name, count) values ($1, $2)', [text, 1])
         }
     }
