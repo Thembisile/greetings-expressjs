@@ -5,12 +5,27 @@
         <th>
             Id_Name & Description
         </th>
+        <th>
+            Language
+        </th>
+        <th>
+            Counter
+        </th>
     </tr>
     {{#each usersGreeted}}
     <tr>
         <td>
             <a href="/perUser/{{id_name}}">{{id_name}}</a>
         </td>
+        <td>
+            {{language}}
+        </td>
+        <td>
+            {{count}}
+        </td>
     </tr>
     {{/each}}
 </table>
+<form action="/back" method="post">
+    <button type="submit" class="button">BACK</button>
+</form>

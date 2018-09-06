@@ -38,5 +38,11 @@
   background-color: lightgrey;
 }
 
-.container {
+.usersGreeted {
+  margin-top : -25px;
+}
+
+.userButton {
+  background-color: deepskyblue;
+  color: white;
 }

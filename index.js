@@ -59,39 +59,42 @@ app.get('/', async function (req, res) {
     let greeting = greet.returnGreeting();
     let count = await pool.query('select count(id_name ) from users;');
     count = count.rows[0].count;
+    let language = req.body.languageRadio;
 
     res.render('home', {
         greeting,
-        count
+        count,
+        language
     });
 });
 
 app.post('/greetings', async function (req, res) {
     let text = req.body.greetTextArea;
+    let Name = text.toUpperCase();
     let language = req.body.languageSelector;
 
-    if (text === '' && language === undefined) {
+    if (Name === '' && language === undefined) {
         req.flash('info', 'Please Enter Name & Select Language')
     }
     else if (language === undefined) {
         req.flash('info', 'Please Select Language');
     }
-    else if (text === '') {
+    else if (Name === '') {
         req.flash('warning', 'Please Enter Name :')
     }
     else {
 
-        let user = await pool.query('SELECT * FROM users WHERE id_name=$1', [text])
+        let user = await pool.query('SELECT * FROM users WHERE id_name=$1', [Name])
         if (user.rows.length != 0) {
-            let currentCount = await pool.query('SELECT count FROM users WHERE id_name = $1', [text]);
+            let currentCount = await pool.query('SELECT count FROM users WHERE id_name = $1', [Name]);
             let initialCount = currentCount.rows[0].count + 1;
-            await pool.query('UPDATE users SET count=$1 WHERE id_name=$2', [initialCount, text]);
+            await pool.query('UPDATE users SET count=$1 WHERE id_name=$2', [initialCount, Name]);
         }
         else {
-            await pool.query('INSERT INTO users (id_name, count) values ($1, $2)', [text, 1])
+            await pool.query('INSERT INTO users (id_name, count) values ($1, $2)', [Name, 1])
         }
         // greet.returnGreeting();
-        greet.greetingFunction(text, language);
+        greet.greetingFunction(Name, language);
     }
 
     res.redirect('/');
@@ -108,6 +111,10 @@ app.post('/reset', async function (req, res) {
     greet.reset();
     // req.flash('info', 'All data cleared out!');
     res.redirect('/');
+})
+
+app.post('/back', async function(req, res){
+    res.redirect('/')
 })
 
 app.get('/perUser/:id_name', async function (req, res) {

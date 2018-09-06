@@ -63,10 +63,9 @@
         </div>
     </div>
     </form>
-    <br>
-    <span><a href="/greeted">Names Greeted</a></span>
-    <br>
-    <br>
+    <div class="three columns">
+
+    </div>
     <form action="/reset" method="POST">
         <div class="row">
             <div class="three columns">
@@ -74,6 +73,13 @@
             </div>
         </div>
     </form>
+    <div class="row">
+        <div class="three columns usersGreeted">
+            <form action="/greeted">
+                <button type="submit" class="userButton">USERS GREETED</button>
+            </form>
+        </div>
+    </div>
     <div class="row">
         <div class="twelve columns displayField">
             <span class="">{{greeting}}</span>
