@@ -80,7 +80,7 @@ app.post('/greetings', async function (req, res) {
         req.flash('info', 'Please Select Language');
     }
     else if (Name === '') {
-        req.flash('warning', 'Please Enter Name :')
+        req.flash('info', 'Please Enter Name :')
     }
     else {
 
@@ -93,7 +93,6 @@ app.post('/greetings', async function (req, res) {
         else {
             await pool.query('INSERT INTO users (id_name, count) values ($1, $2)', [Name, 1])
         }
-        // greet.returnGreeting();
         greet.greetingFunction(Name, language);
     }
 
