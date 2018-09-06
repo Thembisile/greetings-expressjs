@@ -7,13 +7,27 @@ let session = require('express-session');
 let pg = require("pg");
 let Pool = pg.Pool;
 
-let pool = new Pool({
-    user: 'seandamon',
-    host: 'localhost',
-    database: 'user_greeted',
-    password: 'Thando@2008',
-    port: 5432,
-});
+// should we use a SSL connection
+let useSSL = false;
+let local = process.env.LOCAL || false;
+if (process.env.DATABASE_URL && !local){
+    useSSL = true;
+}
+
+const connectionString = process.env.DATABASE_URL || 'postgresql://seandamon:Thando2008@localhost:5432/user_greeted';
+
+const pool = new Pool({
+    connectionString,
+    ssl : useSSL
+  });
+
+// let pool = new Pool({
+//     user: 'seandamon',
+//     host: 'localhost',
+//     database: 'user_greeted',
+//     password: 'Thando@2008',
+//     port: 5432,
+// });
 
 let app = express();
 let greet = Greet();

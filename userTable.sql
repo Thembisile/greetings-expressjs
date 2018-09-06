@@ -4,12 +4,12 @@
 -- INSERT INTO users (count) values (user has been greeted once again 3);
 
 
-
 -- create table users(
 --     id serial not null primary key,
 --     id_name text not null,
 --     count serial not null
 -- );
+
 -- drop table users;
 
 -- INSERT INTO users (id_name) values ('Shaun has been greeted again ');
