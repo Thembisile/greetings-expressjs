@@ -54,38 +54,36 @@
         </div>
     </div>
     <br>
-    <div class="greetButtons">
-        <div class="row">
-            <div class="three columns">
+
+    <div class="row" style="padding-left:5px;">
+        <div class="four columns">
+            <div class="greetButtons">
                 <button class="button-primary greetBtn" type="submit" name="button">Greet</button>
             </div>
-
         </div>
-    </div>
-    </form>
-    <div class="three columns">
-
-    </div>
-    <form action="/reset" method="POST">
-        <div class="row">
-            <div class="three columns">
+        </form>
+        <form action="/reset" method="POST">
+            <div class="four columns">
                 <button class="button-primary resetBtn" type="submit" name="resetButton">Reset</button>
             </div>
-        </div>
-    </form>
-    <div class="row">
-        <div class="three columns usersGreeted">
+        </form>
+        <br>
+        <div class="four columns" style="margin-top:-20px;">
             <form action="/greeted">
                 <button type="submit" class="userButton">USERS GREETED</button>
             </form>
         </div>
+
     </div>
-    <div class="row">
-        <div class="twelve columns displayField">
-            <span class="">{{greeting}}</span>
-            {{#if messages.info}} {{messages.info}} {{/if}}
-        </div>
+</div>
+</div>
+</div>
+<div class="row">
+    <div class="twelve columns displayField">
+        <span class="">{{greeting}}</span>
+        {{#if messages.info}} {{messages.info}} {{/if}}
     </div>
+</div>
 </div>
 
 

@@ -82,19 +82,7 @@ app.post('/greetings', async function (req, res) {
     else if (Name === '') {
         req.flash('info', 'Please Enter Name :')
     }
-    else {
-
-        let user = await pool.query('SELECT * FROM users WHERE id_name=$1', [Name])
-        if (user.rows.length != 0) {
-            let currentCount = await pool.query('SELECT count FROM users WHERE id_name = $1', [Name]);
-            let initialCount = currentCount.rows[0].count + 1;
-            await pool.query('UPDATE users SET count=$1 WHERE id_name=$2', [initialCount, Name]);
-        }
-        else {
-            await pool.query('INSERT INTO users (id_name, count) values ($1, $2)', [Name, 1])
-        }
-        greet.greetingFunction(Name, language);
-    }
+    greet.greetingFunction(Name, language);
 
     res.redirect('/');
 })

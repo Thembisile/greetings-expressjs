@@ -1,10 +1,24 @@
 module.exports = function (storedUser) {
+  let pg = require("pg");
+  let Pool = pg.Pool;
+  let useSSL = false;
+  let local = process.env.LOCAL || false;
+  if (process.env.DATABASE_URL && !local) {
+    useSSL = true;
+  }
 
+  const connectionString = process.env.DATABASE_URL || 'postgresql://seandamon:Thando2008@localhost:5432/user_greeted';
+
+  const pool = new Pool({
+    connectionString,
+    ssl: useSSL
+  });
   let person = '';
   let nameAndLang = '';
   let mapNames = {};
 
-  function greetingFunction(name, language) {
+  async function greetingFunction(name, language) {
+
 
     if (name != '') {
       person = name
@@ -26,8 +40,21 @@ module.exports = function (storedUser) {
     if (language === 'IsiXhosa') {
       nameAndLang = 'Molo, ' + name;
     }
+    else {
+
+      let user = await pool.query('SELECT * FROM users WHERE id_name=$1', [name])
+      if (user.rows.length != 0) {
+        let currentCount = await pool.query('SELECT count FROM users WHERE id_name = $1', [name]);
+        let initialCount = currentCount.rows[0].count + 1;
+        await pool.query('UPDATE users SET count=$1 WHERE id_name=$2', [initialCount, name]);
+      }
+      else {
+        await pool.query('INSERT INTO users (id_name, count) values ($1, $2)', [name, 1])
+      }
+    }
     return nameAndLang;
   }
+
 
   function returnGreeting() {
     return nameAndLang
@@ -42,10 +69,10 @@ module.exports = function (storedUser) {
   }
 
   function reset() {
-     person = '';
-     nameAndLang = '';
-     mapNames = {};
-     
+    person = '';
+    nameAndLang = '';
+    mapNames = {};
+
   }
 
   return {
