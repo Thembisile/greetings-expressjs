@@ -10,7 +10,7 @@ let Pool = pg.Pool;
 // should we use a SSL connection
 let useSSL = false;
 let local = process.env.LOCAL || false;
-if (process.env.DATABASE_URL && !local){
+if (process.env.DATABASE_URL && !local) {
     useSSL = true;
 }
 
@@ -18,8 +18,8 @@ const connectionString = process.env.DATABASE_URL || 'postgresql://seandamon:Tha
 
 const pool = new Pool({
     connectionString,
-    ssl : useSSL
-  });
+    ssl: useSSL
+});
 
 // let pool = new Pool({
 //     user: 'seandamon',
@@ -88,9 +88,10 @@ app.post('/greetings', async function (req, res) {
             await pool.query('UPDATE users SET count=$1 WHERE id_name=$2', [initialCount, text]);
         }
         else {
-            greet.returnGreeting();
             await pool.query('INSERT INTO users (id_name, count) values ($1, $2)', [text, 1])
         }
+        // greet.returnGreeting();
+        greet.greetingFunction(text, language);
     }
 
     res.redirect('/');
