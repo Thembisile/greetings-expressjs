@@ -1,85 +1,46 @@
 module.exports = function (storedUser) {
-  let pg = require("pg");
-  let Pool = pg.Pool;
-  let useSSL = false;
-  let local = process.env.LOCAL || false;
-  if (process.env.DATABASE_URL && !local) {
-    useSSL = true;
-  }
-
-  const connectionString = process.env.DATABASE_URL || 'postgresql://seandamon:Thando2008@localhost:5432/user_greeted';
-
-  const pool = new Pool({
-    connectionString,
-    ssl: useSSL
-  });
-  let person = '';
-  let nameAndLang = '';
-  let mapNames = {};
 
   async function greetingFunction(name, language) {
 
+    let user = await readUser(name)
+    if (user.length != 0) {
 
-    if (name != '') {
-      person = name
-    }
-    if (person !== "") {
+      let initialCount = user.count + 1;
 
-      if (mapNames[person] === undefined) {
-
-        mapNames[person] = 0;
+      await updateData(name, initialCount, language);
       }
-    }
-
-    if (language === 'English') {
-      nameAndLang = 'Hello, ' + name;
-    }
-    if (language === 'Afrikaans') {
-      nameAndLang = 'Goeie Dag, ' + name;
-    }
-    if (language === 'IsiXhosa') {
-      nameAndLang = 'Molo, ' + name;
-    }
     else {
-
-      let user = await pool.query('SELECT * FROM users WHERE id_name=$1', [name])
-      if (user.rows.length != 0) {
-        let currentCount = await pool.query('SELECT count FROM users WHERE id_name = $1', [name]);
-        let initialCount = currentCount.rows[0].count + 1;
-        await pool.query('UPDATE users SET count=$1 WHERE id_name=$2', [initialCount, name]);
-      }
-      else {
-        await pool.query('INSERT INTO users (id_name, count) values ($1, $2)', [name, 1])
-      }
+      await insertData(name, language)
     }
-    return nameAndLang;
+
+    return language + ', ' + name;
   }
 
-
-  function returnGreeting() {
-    return nameAndLang
+  function insertData(id_name){
+    await pool.query('INSERT INTO users (id_name, count) values ($1, $2)', [id_name, 1])
+  }
+  function readUser(id_name) {
+    let outcome = await pool.query('SELECT * FROM users WHERE id_name=$1', [id_name]);
+    return outcome.rows;
+  }
+  function updateData(Name, initialCount, Language) {
+    await pool.query('UPDATE users SET count=$1, Language=$3, WHERE id_name=$2', [initialCount, Language, Name])
   }
 
-  function greetCounter() {
-    return Object.entries(mapNames).length;
-  }
-
-  function nameMap() {
-    return mapNames
+  function readUserData() {
+    let outcome = await pool.query('SELECT * FROM users;');
+    return outcome.rows;
   }
 
   function reset() {
-    person = '';
-    nameAndLang = '';
-    mapNames = {};
-
+    await pool.query('DELETE FROM users;')
   }
 
   return {
     greetingFunction,
-    returnGreeting,
-    greetCounter,
-    nameMap,
-    reset
+    reset,
+    readUserData,
+    readUser,
+    updateData
   }
 }

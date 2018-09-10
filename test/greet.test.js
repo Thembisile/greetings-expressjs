@@ -18,18 +18,39 @@ describe('The greetings database web app', function(){
         await pool.query("delete from users;");
     });
 
-    it('should pass the db test', async function(){
+    it('should return the length for each user greeted', async function(){
         
         // the Factory Function is called Greet
         let greet = Greet(pool);
-        // await greet.add({
-        //     description : "Diary"
-        // });
-
-        // let categories = await greet.all();
-        assert.equal(undefined, greet.length);
+        await greet.greetingFunction('Shaun');
+        await greet.greetingFunction('Zwai');
+        await greet.greetingFunction('Zola');
+        let greetedUser = await greet.readUserData();
+        assert.equal(3, greetedUser.length);
 
     });
+    it('should  should return the number of greeted users in datatbase', async function(){
+        let greet = Greet(pool);
+        await greet.greetingFunction('Shaun');
+        await greet.greetingFunction('Shaun');
+        let greetCount = await greet.readUser('Shaun');
+        assert.equal(greetCount[0].count, 2);
+
+        let greet2 = Greet(pool);
+        await greet2.greetingFunction('Siya');
+        await greet2.greetingFunction('Siya');
+        await greet2.greetingFunction('Siya');
+        await greet2.greetingFunction('Siyabonga')
+        let greetCount2 = await greet2.readUser('Siyabonga')
+        assert.equal(greetCount2[0].count, 1)
+    });
+    it('should return greeting in language selected', async function(){
+        let greet = Greet(pool);
+        await greet.greetingFunction('Shaun', 'English');
+        let greetName = await greet.returnGreeting();
+        assert.equal(greetName, 'Hello, Shaun')
+
+    })
 
     after(function(){
         pool.end();

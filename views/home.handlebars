@@ -33,21 +33,21 @@
         <div class="row">
             <div class="four columns">
                 <label class="">
-                    <input type="radio" name="languageSelector" class="languageRadio" value="English"></input>
+                    <input type="radio" name="languageSelector" class="languageRadio" value="Hello"></input>
                     <span class="label-body">English</span>
                 </label>
             </div>
 
             <div class="four columns">
                 <label class="">
-                    <input type="radio" name="languageSelector" class="languageRadio" value="Afrikaans"></input>
+                    <input type="radio" name="languageSelector" class="languageRadio" value="Goeie"></input>
                     <span class="label-body">Afrikaans</span>
                 </label>
             </div>
 
             <div class="four columns">
                 <label class="">
-                    <input type="radio" name="languageSelector" class="languageRadio" value="IsiXhosa"></input>
+                    <input type="radio" name="languageSelector" class="languageRadio" value="Molo"></input>
                     <span class="label-body">IsiXhosa</span>
                 </label>
             </div>
@@ -69,9 +69,7 @@
         </form>
         <br>
         <div class="four columns" style="margin-top:-20px;">
-            <form action="/greeted">
-                <button type="submit" class="userButton">USERS GREETED</button>
-            </form>
+            <button><a href="/greeted">USERS GREETED</a></button>
         </div>
 
     </div>
@@ -80,7 +78,6 @@
 </div>
 <div class="row">
     <div class="twelve columns displayField">
-        <span class="">{{greeting}}</span>
         {{#if messages.info}} {{messages.info}} {{/if}}
     </div>
 </div>
