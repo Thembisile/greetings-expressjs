@@ -47,7 +47,7 @@ app.use(bodyParser.json())
 
 let greet = greetingRoutes(pool);
 
-app.get('/', greet.index); 
+app.get('/', greet.home); 
 app.post('/greetings', greet.greetings); 
 app.get('/greeted', greet.greeted); 
 app.post('/reset', greet.Reset);

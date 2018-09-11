@@ -3,7 +3,7 @@ let greetRoute = require('../servicesDB/greetingDB');
 module.exports = function(pool){
     let greet = greetRoute(pool);
 
-    async function index(req, res){
+    async function home(req, res){
         try{
             let count = await greet.countUsers()
             res.render('home', { count });
@@ -74,7 +74,7 @@ module.exports = function(pool){
     return {
         greeted,
         greetings,
-        index,
+        home,
         counter,
         Reset
     }
