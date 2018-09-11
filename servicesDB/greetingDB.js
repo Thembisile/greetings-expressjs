@@ -16,11 +16,16 @@ module.exports = function (pool) {
         return language + ', ' + name;
     }
 
-    async function insertData(id_name) {
-        await pool.query('INSERT INTO users (id_name, count) values ($1, $2)', [id_name, 1])
+    async function overallCount () {
+        let outcome = await pool.query('SELECT count(*) FROM users;');
+        return parseInt(outcome.rows[0]);
     }
-    async function readUser(id_name) {
-        let outcome = await pool.query('SELECT * FROM users WHERE id_name=$1', [id_name]);
+
+    async function insertData(id_name) {
+        await pool.query('INSERT INTO users (id_name, count) values ($1, $2)', [id_name, 1]);
+    }
+    async function readUser(person) {
+        let outcome = await pool.query('SELECT * FROM users where id_name=$1', [person]);
         return outcome.rows;
     }
     async function updateData(Name, initialCount, Language) {
@@ -41,6 +46,7 @@ module.exports = function (pool) {
         reset,
         readUserData,
         readUser,
-        updateData
+        updateData,
+        overallCount
     }
 }

@@ -1,5 +1,5 @@
 const assert = require('assert');
-const Greet = require('../Greet');
+const Greet = require('../servicesDB/greetingDB');
 const pg = require("pg");
 const Pool = pg.Pool;
 
@@ -26,31 +26,33 @@ describe('The greetings database web app', function(){
         await greet.greetingFunction('Zwai');
         await greet.greetingFunction('Zola');
         let greetedUser = await greet.readUserData();
-        assert.equal(3, greetedUser.length);
+        assert.strictEqual(3, greetedUser.length);
 
     });
     it('should  should return the number of greeted users in datatbase', async function(){
         let greet = Greet(pool);
-        await greet.greetingFunction('Shaun');
-        await greet.greetingFunction('Shaun');
+        await greet.greetingFunction('Shaun', 'Hello');
+        await greet.greetingFunction('Shaun', 'Hello' );
         let greetCount = await greet.readUser('Shaun');
-        assert.equal(greetCount[0].count, 2);
+        assert.strictEqual(greetCount[0].count, 2);
 
-        let greet2 = Greet(pool);
-        await greet2.greetingFunction('Siya');
-        await greet2.greetingFunction('Siya');
-        await greet2.greetingFunction('Siya');
-        await greet2.greetingFunction('Siyabonga')
-        let greetCount2 = await greet2.readUser('Siyabonga')
-        assert.equal(greetCount2[0].count, 1)
     });
     it('should return greeting in language selected', async function(){
         let greet = Greet(pool);
-        await greet.greetingFunction('Shaun', 'English');
-        let greetName = await greet.returnGreeting();
-        assert.equal(greetName, 'Hello, Shaun')
+        let greetName = await greet.greetingFunction('Shaun', 'Hello');
+        assert.strictEqual(greetName, 'Hello, Shaun')
 
-    })
+    });
+    it('Should not count the same name twice', async function () {
+        let getGreet = Greet(pool);
+        await getGreet.greetingFunction('Shaun', 'Hello');
+        await getGreet.greetingFunction('Shaun', 'Hello');
+        await getGreet.greetingFunction('Shaun', 'Hello');
+        await getGreet.greetingFunction('Shaun', 'Hello');
+        let count = await getGreet.overallCount();
+
+        assert.strictEqual(count, 1);
+    });
 
     after(function(){
         pool.end();
