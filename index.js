@@ -1,7 +1,7 @@
 let express = require('express');
 let exphbs = require('express-handlebars');
 let bodyParser = require('body-parser');
-let Greet = require('./routes/greeting');
+let greetingRoutes = require('./routes/greeting');
 let flash = require('express-flash');
 let session = require('express-session');
 let pg = require("pg");
@@ -45,7 +45,7 @@ app.use(session({
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-let greet = Greet(pool);
+let greet = greetingRoutes(pool);
 
 app.get('/', greet.index); 
 app.post('/greetings', greet.greetings); 
