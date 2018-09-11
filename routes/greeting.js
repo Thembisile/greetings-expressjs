@@ -1,4 +1,4 @@
-let greetRoute = require('../servicesDB/greetingDB');
+let greetRoute = require('../services/greetings');
 
 module.exports = function(pool){
     let greet = greetRoute(pool);
@@ -62,7 +62,7 @@ module.exports = function(pool){
         }   
     }
 
-    async function Reset(req, res){
+    async function reset(req, res){
         try{
             await greet.resetData();
             res.redirect('/')
@@ -71,11 +71,12 @@ module.exports = function(pool){
 
         }
     }
+
     return {
         greeted,
         greetings,
         home,
         counter,
-        Reset
+        reset
     }
 }
