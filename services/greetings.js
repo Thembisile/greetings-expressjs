@@ -1,52 +1,52 @@
 module.exports = function (pool) {
 
-    async function greetingFunction(name, language) {
+    async function GreetingFunction(name, language) {
 
-        let user = await readUser(name)
+        let user = await ReadUser(name)
         if (user.length != 0) {
 
-            let initialCount = user[0].count + 1;
+            let initialCount = user.count + 1;
 
-            await updateData(name, initialCount);
+            await UpdateData(name, initialCount);
         }
         else {
-            await insertData(name)
+            await InsertData(name)
         }
 
         return language + ', ' + name;
     }
 
-    async function overallCount () {
+    async function OverallCount () {
         let outcome = await pool.query('SELECT count(*) FROM users;');
         return parseInt(outcome.rows[0].count);
     }
 
-    async function insertData(id_name) {
+    async function InsertData(id_name) {
         await pool.query('INSERT INTO users (id_name, count) values ($1, $2)', [id_name, 1]);
     }
-    async function readUser(person) {
+    async function ReadUser(person) {
         let outcome = await pool.query('SELECT * FROM users where id_name=$1', [person]);
         return outcome.rows;
     }
-    async function updateData(Name, initialCount) {
+    async function UpdateData(Name, initialCount) {
         await pool.query('UPDATE users SET count=$1 WHERE id_name=$2', [initialCount, Name])
     }
 
-    async function readUserData() {
+    async function ReadUserData() {
         let outcome = await pool.query('SELECT * FROM users;');
         return outcome.rows;
     }
 
-    async function reset() {
+    async function Reset() {
         await pool.query('DELETE FROM users;')
     }
 
     return {
-        greetingFunction,
-        reset,
-        readUserData,
-        readUser,
-        updateData,
-        overallCount
+        GreetingFunction,
+        Reset,
+        ReadUserData,
+        ReadUser,
+        UpdateData,
+        OverallCount
     }
 }

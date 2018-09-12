@@ -5,7 +5,7 @@ module.exports = function(greet){
 
     async function home(req, res){
         try{
-            let count = await greet.overallCount()
+            let count = await greet.OverallCount()
             res.render('home', { count });
         }
         catch(err){
@@ -29,7 +29,7 @@ module.exports = function(greet){
                 req.flash('info', 'Please Enter Name :')
             }
             else if (isNaN(Name)) {
-                await greet.greetingFunction(Name, Language);
+                await greet.GreetingFunction(Name, Language);
                 req.flash('info', Language + ', ' + Name);
             }
             res.redirect('/');
@@ -41,7 +41,7 @@ module.exports = function(greet){
 
     async function greeted(req, res){
         try{
-          let user = await greet.readUserData();
+          let user = await greet.ReadUserData();
           res.render('greeted', {user})
         }
         catch(err){
@@ -52,7 +52,7 @@ module.exports = function(greet){
     async function counter(req, res){
         try {
             let id_name = req.params.id_name;
-            let outcome = await greet.readUser(id_name);
+            let outcome = await greet.ReadUser(id_name);
     
             res.render('names', {
                 howManyTimes: outcome
@@ -64,7 +64,7 @@ module.exports = function(greet){
 
     async function reset(req, res){
         try{
-            await greet.reset();
+            await greet.Reset();
             res.redirect('/')
         }
         catch(err){
