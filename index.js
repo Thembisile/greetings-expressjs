@@ -57,6 +57,15 @@ app.post('/back', async function(req, res){
     res.redirect('/')
 });
 
+app.post('/clear', async function(req, res){
+    await pool.query('DELETE FROM users;')
+    res.render('greeted')
+});
+
+app.post('/home', async function(req, res){
+    res.redirect('/');
+})
+
 let PORT = process.env.PORT || 4040;
 
 app.listen(PORT, function () {

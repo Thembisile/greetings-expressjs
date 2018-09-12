@@ -5,7 +5,8 @@
         <th>
             Id_Name & Description
         </th>
-        {{!-- <th>
+        {{!--
+        <th>
             Language
         </th> --}}
         <th>
@@ -17,7 +18,8 @@
         <td>
             <a href="/perUser/{{id_name}}">{{id_name}}</a>
         </td>
-        {{!-- <td>
+        {{!--
+        <td>
             {{language}}
         </td> --}}
         <td>
@@ -26,6 +28,15 @@
     </tr>
     {{/each}}
 </table>
-<form action="/back" method="post">
-    <button type="submit" class="button">BACK</button>
-</form>
+<div class="row">
+    <div class="one column">
+        <form action="/back" method="post">
+            <button type="submit" class="button">BACK</button>
+        </form>
+    </div>
+    <div class="eleven columns">
+        <form action="/clear" method="post">
+            <button class="button" type="submit">CLEAR</button>
+        </form>
+    </div>
+</div>
