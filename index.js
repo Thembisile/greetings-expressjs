@@ -57,7 +57,7 @@ app.post('/back', async function(req, res){
     res.redirect('/')
 });
 
-let PORT = process.env.PORT || 4040;
+let PORT = process.env.PORT || 5050;
 
 app.listen(PORT, function () {
     console.log('App running on port', PORT);
