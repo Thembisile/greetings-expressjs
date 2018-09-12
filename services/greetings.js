@@ -5,12 +5,12 @@ module.exports = function (pool) {
         let user = await readUser(name)
         if (user.length != 0) {
 
-            let initialCount = user.count + 1;
+            let initialCount = user[0].count + 1;
 
-            await updateData(name, initialCount, language);
+            await updateData(name, initialCount);
         }
         else {
-            await insertData(name, language)
+            await insertData(name)
         }
 
         return language + ', ' + name;

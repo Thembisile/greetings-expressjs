@@ -39,6 +39,7 @@ describe('The greetings database web app', function(){
         let greet = Greet(pool);
         await greet.greetingFunction('Zwai', 'Hello');
         await greet.greetingFunction('Shaun', 'Molo');
+        await greet.greetingFunction('Shaun', 'Molo');
         await greet.greetingFunction('Shaun', 'Hello');
         let userCount = await greet.overallCount();
         assert.equal(2, userCount)
