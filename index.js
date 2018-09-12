@@ -1,8 +1,8 @@
 let express = require('express');
 let exphbs = require('express-handlebars');
 let bodyParser = require('body-parser');
-let greetRoute = require('./routes/greeting');
-let greetService = require('./services/greetings')
+let GreetRoute = require('./routes/greeting');
+let GreetService = require('./services/greetings')
 let flash = require('express-flash');
 let session = require('express-session');
 let pg = require("pg");
@@ -46,8 +46,8 @@ app.use(session({
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-let greetFunction = greetService(pool);
-let greet = greetRoute(greetFunction);
+let greetFunction = GreetService(pool);
+let greet = GreetRoute(greetFunction);
 
 app.get('/', greet.home); 
 app.post('/greetings', greet.greetings); 
