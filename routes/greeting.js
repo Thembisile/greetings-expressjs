@@ -1,7 +1,7 @@
-let greetRoute = require('../services/greetings');
+// let greetRoute = require('../services/greetings');
 
-module.exports = function(pool){
-    let greet = greetRoute(pool);
+module.exports = function(greet){
+    // let greet = greetRoute(pool);
 
     async function home(req, res){
         try{
@@ -35,7 +35,7 @@ module.exports = function(pool){
             res.redirect('/');
         }
         catch(err){
-
+            res.send(err.stack)
         }
     }
 
@@ -64,7 +64,7 @@ module.exports = function(pool){
 
     async function reset(req, res){
         try{
-            await greet.resetData();
+            await greet.reset();
             res.redirect('/')
         }
         catch(err){

@@ -37,10 +37,10 @@ describe('The greetings database web app', function(){
     });
     it('should not greet the same name twice', async function(){
         let greet = Greet(pool);
-        await greet.greetingFunction("Zwai", 'Hello');
-        await greet.greetingFunction("Shaun", 'Molo');
+        await greet.greetingFunction('Zwai', 'Hello');
+        await greet.greetingFunction('Shaun', 'Molo');
+        await greet.greetingFunction('Shaun', 'Hello');
         let userCount = await greet.overallCount();
-        console.log(await greet.greetingFunction())
         assert.equal(2, userCount)
     });
 

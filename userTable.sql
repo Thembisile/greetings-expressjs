@@ -9,4 +9,4 @@ create table users(
     count int not null DEFAULT 0
 );
 
--- INSERT INTO users (id_name) values ('Shaun has been greeted again ');
+-- INSERT INTO users (id_name) values ('Shaun has been greeted again ');\
