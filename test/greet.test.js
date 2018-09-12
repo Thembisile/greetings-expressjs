@@ -29,29 +29,19 @@ describe('The greetings database web app', function(){
         assert.strictEqual(3, greetedUser.length);
 
     });
-    it('should  should return the number of greeted users in database', async function(){
-        let greet = Greet(pool);
-        await greet.greetingFunction('Shaun', 'Hello');
-        await greet.greetingFunction('Shaun', 'Hello' );
-        let greetCount = await greet.readUser('Shaun');
-        assert.strictEqual(greetCount[0].count, 2);
-
-    });
     it('should return greeting in language selected', async function(){
         let greet = Greet(pool);
         let greetName = await greet.greetingFunction('Shaun', 'Hello');
         assert.strictEqual(greetName, 'Hello, Shaun')
 
     });
-    it('Should not count the same name twice', async function () {
-        let getGreet = Greet(pool);
-        await getGreet.greetingFunction('Shaun', 'Hello');
-        await getGreet.greetingFunction('Shaun', 'Hello');
-        await getGreet.greetingFunction('Shaun', 'Hello');
-        await getGreet.greetingFunction('Shaun', 'Hello');
-        let count = await getGreet.overallCount();
-
-        assert.strictEqual(count, 1);
+    it('should not greet the same name twice', async function(){
+        let greet = Greet(pool);
+        await greet.greetingFunction("Zwai", 'Hello');
+        await greet.greetingFunction("Shaun", 'Molo');
+        let userCount = await greet.overallCount();
+        console.log(await greet.greetingFunction())
+        assert.equal(2, userCount)
     });
 
     after(function(){
