@@ -1,5 +1,5 @@
 const assert = require('assert');
-const Greet = require('../servicesDB/greetingDB');
+const Greet = require('../services/greetings');
 const pg = require("pg");
 const Pool = pg.Pool;
 
@@ -29,7 +29,7 @@ describe('The greetings database web app', function(){
         assert.strictEqual(3, greetedUser.length);
 
     });
-    it('should  should return the number of greeted users in datatbase', async function(){
+    it('should  should return the number of greeted users in database', async function(){
         let greet = Greet(pool);
         await greet.greetingFunction('Shaun', 'Hello');
         await greet.greetingFunction('Shaun', 'Hello' );

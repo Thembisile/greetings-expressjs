@@ -5,7 +5,7 @@ module.exports = function(pool){
 
     async function home(req, res){
         try{
-            let count = await greet.countUsers()
+            let count = await greet.overallCount()
             res.render('home', { count });
         }
         catch(err){

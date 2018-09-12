@@ -18,14 +18,14 @@ module.exports = function (pool) {
 
     async function overallCount () {
         let outcome = await pool.query('SELECT count(*) FROM users;');
-        return parseInt(outcome.rows[0]);
+        return parseInt(outcome.rows[0].count);
     }
 
     async function insertData(id_name) {
         await pool.query('INSERT INTO users (id_name, count) values ($1, $2)', [id_name, 1]);
     }
-    async function readUser(person) {
-        let outcome = await pool.query('SELECT * FROM users where id_name=$1', [person]);
+    async function readUser(user) {
+        let outcome = await pool.query('SELECT * FROM users WHERE id_name=$1', [user]);
         return outcome.rows;
     }
     async function updateData(Name, initialCount, Language) {
