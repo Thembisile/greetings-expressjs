@@ -18,7 +18,7 @@ describe('The greetings database web app', function(){
         await pool.query("delete from users;");
     });
 
-    it('should return the length for each user greeted', async function(){
+    it('should return all the users count that were greeted', async function(){
         
         // the Factory Function is called Greet
         let greet = Greet(pool);
@@ -32,8 +32,12 @@ describe('The greetings database web app', function(){
     it('should return greeting in language selected', async function(){
         let greet = Greet(pool);
         let greetName = await greet.greetingFunction('Shaun', 'Hello');
-        assert.strictEqual(greetName, 'Hello, Shaun')
 
+        let greet2 = Greet(pool);
+        let greetName2 = await greet2.greetingFunction('Siya', 'Molo');
+
+        assert.strictEqual(greetName2, 'Molo, Siya');
+        assert.strictEqual(greetName, 'Hello, Shaun');
     });
     it('should not greet the same name twice', async function(){
         let greet = Greet(pool);
@@ -43,6 +47,21 @@ describe('The greetings database web app', function(){
         await greet.greetingFunction('Shaun', 'Hello');
         let userCount = await greet.overallCount();
         assert.equal(2, userCount)
+    });
+    it('shoul greet the user in Afrikaans', async function(){
+        let greet = Greet(pool);
+
+        let greetedUser = await greet.greetingFunction('Siyamthanda', 'Goie Dag');
+
+        assert.strictEqual(greetedUser, 'Goie Dag, Siyamthanda');
+    })
+    it('should return the count of the greeted user only', async function(){
+        let greet = Greet(pool);
+        await greet.greetingFunction('Shaun', 'Molo');
+        await greet.greetingFunction('Shaun', 'Molo');
+        await greet.greetingFunction('Zwai', 'Molo');
+        let greetedUser = await greet.readUser('Shaun');
+        assert.strictEqual(greetedUser[0].count, 2);
     });
 
     after(function(){
